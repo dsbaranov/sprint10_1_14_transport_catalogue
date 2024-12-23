@@ -5,3 +5,4 @@
  * JSON, а также код обработки запросов к базе и формирование массива ответов в
  * формате JSON
  */
+JsonReader::JsonReader(const RequestHandler &handler) : handler_(handler) {}

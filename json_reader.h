@@ -1,3 +1,5 @@
+#include "request_handler.h"
+
 #pragma once
 
 /*
@@ -5,3 +7,12 @@
  * JSON, а также код обработки запросов к базе и формирование массива ответов в
  * формате JSON
  */
+
+class JsonReader
+{
+public:
+    JsonReader(const RequestHandler &handler);
+
+private:
+    const RequestHandler &handler_;
+};

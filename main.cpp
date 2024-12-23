@@ -1,6 +1,11 @@
-
-
-int main() {
+#include "json_reader.h"
+#include "request_handler.h"
+#include "transport_catalogue.h"
+int main()
+{
+  TransportCatalogue catalogue;
+  RequestHandler request_handler(catalogue);
+  JsonReader reader(request_handler);
   /*
    * Примерная структура программы:
    *

@@ -8,3 +8,4 @@
  * Если вы затрудняетесь выбрать, что можно было бы поместить в этот файл,
  * можете оставить его пустым.
  */
+RequestHandler::RequestHandler(const TransportCatalogue &catalogue) : catalogue_(catalogue) {}

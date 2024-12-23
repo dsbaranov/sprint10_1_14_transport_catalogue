@@ -1,8 +1,5 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5.0)
 project(sprint10_1_14_transport_catalogue VERSION 0.1.0 LANGUAGES C CXX)
-file(GLOB SOURCES
-*.h
-*.cpp
-)
+file( GLOB SOURCES *.h *.cpp )
 add_executable(sprint10_1_14_transport_catalogue ${SOURCES})
 target_compile_options(sprint10_1_14_transport_catalogue PRIVATE -Wall -Wextra -Wpedantic -Werror)

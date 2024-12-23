@@ -3,21 +3,9 @@
 #include <cmath>
 #include <utility>
 
+#include "domain.h"
+
 namespace catalogue {
-namespace structures {
-
-struct Coordinates {
-  double lat;
-  double lng;
-  bool operator==(const Coordinates &other) const {
-    return lat == other.lat && lng == other.lng;
-  }
-  bool operator!=(const Coordinates &other) const { return !(*this == other); }
-
-  Coordinates(double _lat, double _lng) : lat(_lat), lng(_lng) {}
-};
-
-};  // namespace structures
 
 namespace geo {
 static const size_t EARTH_RADIUS = 6371000;

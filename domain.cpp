@@ -14,3 +14,15 @@
  * этот файл пустым.
  *
  */
+
+namespace catalogue::structures {
+
+// Coordinates
+bool Coordinates::operator==(const Coordinates &other) const {
+  return lat == other.lat && lng == other.lng;
+}
+bool Coordinates::operator!=(const Coordinates &other) const {
+  return !(*this == other);
+}
+
+}  // namespace catalogue::structures

@@ -105,30 +105,32 @@ namespace catalogue::structures
     DistanceStatistics distance_statistics;
   };
 
-  struct RequestHeader
-  {
-    std::string type;
-    std::string name;
-  };
-
-  struct StopRequest
-  {
-    RequestHeader header;
-    std::vector<std::string> stops;
-    bool is_roundtrip;
-  };
-
-  struct BusRequest
-  {
-    RequestHeader header;
-    double latitude;
-    double longitude;
-    std::unordered_map<std::string, size_t> road_distances;
-  };
-
-  struct StatRequest
-  {
-    size_t id;
-    RequestHeader header;
-  };
 } // namespace catalogue::structures
+
+struct StopRequest
+{
+  std::string name;
+  double latitude;
+  double longitude;
+};
+
+struct StopRequestDistance
+{
+  std::string from;
+  std::string to;
+  double distance;
+};
+
+struct BusRequest
+{
+  std::string name;
+  std::vector<std::string> stops;
+  bool is_roundtrip;
+};
+
+struct StatRequest
+{
+  int id;
+  std::string type;
+  std::string name;
+};

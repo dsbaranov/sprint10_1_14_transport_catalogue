@@ -45,6 +45,8 @@ class RequestHandler
 public:
     RequestHandler(const TransportCatalogue &catalogue);
 
+   
+
 private:
     const TransportCatalogue &catalogue_;
 };

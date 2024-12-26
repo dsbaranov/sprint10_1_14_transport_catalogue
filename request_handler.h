@@ -40,13 +40,18 @@ renderer_;
 };
 */
 using namespace catalogue;
-class RequestHandler
-{
-public:
-    RequestHandler(const TransportCatalogue &catalogue);
+class RequestHandler {
+ public:
+  RequestHandler(TransportCatalogue &catalogue);
 
-   
+  //   std::vector<BusRequest> bus_requests;
+  //   std::vector<StopRequest> stop_requests;
+  //   std::vector<StopRequestDistance> stop_distances;
+  //   std::vector<StatRequest> stat_requests;
+  void AddStops(const std::vector<StopRequest> &);
+  void AddDistances(const std::vector<StopRequestDistance> &);
+  void AddBusses(const std::vector<BusRequest> &);
 
-private:
-    const TransportCatalogue &catalogue_;
+ private:
+  TransportCatalogue &catalogue_;
 };

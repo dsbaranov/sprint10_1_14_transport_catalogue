@@ -13,10 +13,10 @@ using namespace std::literals;
 class JsonReader
 {
 public:
-    JsonReader(const RequestHandler &handler);
+    JsonReader(RequestHandler &handler);
 
-    void ReadStream(std::istream &input);
+    void ReadStreamAndWriteStream(std::istream &input, std::ostream &out);
 
 private:
-    const RequestHandler &handler_;
+    RequestHandler &handler_;
 };

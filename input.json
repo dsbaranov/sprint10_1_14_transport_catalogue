@@ -10,6 +10,15 @@
             "is_roundtrip": false
         },
         {
+            "type": "Bus",
+            "name": "114R",
+            "stops": [
+                "Морской вокзал",
+                "Ривьерский мост"
+            ],
+            "is_roundtrip": true
+        },
+        {
             "type": "Stop",
             "name": "Ривьерский мост",
             "latitude": 43.587795,
@@ -38,6 +47,16 @@
             "id": 2,
             "type": "Bus",
             "name": "114"
+        },
+        {
+            "id": 3,
+            "type": "Bus",
+            "name": "114R"
+        },
+        {
+            "id": 4,
+            "type": "Bus",
+            "name": "115"
         }
     ]
 }

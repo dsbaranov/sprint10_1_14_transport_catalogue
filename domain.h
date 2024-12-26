@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <variant>
+#include <stdexcept>
+#include <set>
 /*
  * В этом файле вы можете разместить классы/структуры, которые являются частью
  * предметной области (domain) вашего приложения и не зависят от транспортного
@@ -133,4 +136,67 @@ struct StatRequest
   int id;
   std::string type;
   std::string name;
+};
+
+struct BusResponse
+{
+  int request_id;
+  int stop_count;
+  int unique_stop_count;
+  double route_length;
+  double curvature;
+};
+
+struct StopResponse
+{
+  int request_id;
+  std::set<std::string_view> buses;
+};
+
+struct ErrorResponse
+{
+  int request_id;
+  std::string error_message;
+  ErrorResponse(int id);
+};
+
+using ResponseValue = std::variant<std::nullptr_t, StopResponse, BusResponse, ErrorResponse>;
+
+class Response
+{
+public:
+  Response(std::nullptr_t);
+  Response(const StopResponse &);
+  Response(const BusResponse &);
+  Response(const ErrorResponse &);
+
+  ResponseValue GetValue() const;
+
+  bool IsStopResponse() const;
+  bool IsBusResponse() const;
+  bool IsErrorResponse() const;
+
+  const StopResponse &AsStop() const;
+  const BusResponse &AsBus() const;
+  const ErrorResponse &AsError() const;
+
+private:
+  const ResponseValue value_;
+
+  template <typename T>
+  bool Is() const
+  {
+    return std::holds_alternative<T>(value_);
+  }
+
+  template <typename T>
+  const T &ExtractValue() const
+  {
+    using namespace std::literals;
+    if (!Is<T>())
+    {
+      throw(std::logic_error("value holds different type"));
+    }
+    return std::get<T>(value_);
+  }
 };

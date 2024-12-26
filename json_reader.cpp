@@ -5,9 +5,9 @@
  * JSON, а также код обработки запросов к базе и формирование массива ответов в
  * формате JSON
  */
-JsonReader::JsonReader(const RequestHandler &handler) : handler_(handler) {}
+JsonReader::JsonReader(RequestHandler &handler) : handler_(handler) {}
 
-void JsonReader::ReadStream(std::istream &input)
+void JsonReader::ReadStreamAndWriteStream(std::istream &input, std::ostream &out)
 {
     auto request_map = json::Load(input).GetRoot().AsMap();
     std::vector<BusRequest> bus_requests;
@@ -64,5 +64,36 @@ void JsonReader::ReadStream(std::istream &input)
             stat_requests.push_back({json_request.at("id"s).AsInt(), json_request.at("type"s).AsString(), json_request.at("name").AsString()});
         }
     }
-    assert(bus_requests.size() == 1 && stop_requests.size() == 2 && stop_distances.size() == 2 && stat_requests.size() == 2);
+    handler_.AddStops(stop_requests);
+    handler_.AddDistances(stop_distances);
+    handler_.AddBusses(bus_requests);
+    if (!stat_requests.empty())
+    {
+        Array responses;
+        for (const StatRequest &request : stat_requests)
+        {
+            const Response response = handler_.GetStatistics(request);
+            if (response.IsStopResponse())
+            {
+                auto stop = response.AsStop();
+                Array stop_buses;
+                for (auto bus_name : stop.buses)
+                {
+                    stop_buses.push_back({std::string(bus_name)});
+                }
+                responses.push_back(Dict{{"request_id"s, stop.request_id}, {"buses"s, stop_buses}});
+            }
+            else if (response.IsBusResponse())
+            {
+                auto bus = response.AsBus();
+                responses.push_back(Dict{{"request_id"s, {bus.request_id}}, {"stop_count"s, {bus.stop_count}}, {"unique_stop_count"s, {bus.unique_stop_count}}, {"route_length"s, {bus.route_length}}, {"curvature"s, {bus.curvature}}});
+            }
+            else if (response.IsErrorResponse())
+            {
+                auto error = response.AsError();
+                responses.push_back(Dict{{"request_id"s, {error.request_id}}, {"error_message", {error.error_message}}});
+            }
+        }
+        Print(Document{responses}, out);
+    }
 }

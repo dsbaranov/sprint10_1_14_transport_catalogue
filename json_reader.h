@@ -1,6 +1,7 @@
 #include "request_handler.h"
 #include "json.h"
 #include "domain.h"
+#include "map_renderer.h"
 #pragma once
 /*
  * Здесь можно разместить код наполнения транспортного справочника данными из
@@ -13,10 +14,11 @@ using namespace std::literals;
 class JsonReader
 {
 public:
-    JsonReader(RequestHandler &handler);
+    JsonReader(RequestHandler &, MapRenderer &);
 
     void ReadStreamAndWriteStream(std::istream &input, std::ostream &out);
 
 private:
     RequestHandler &handler_;
+    MapRenderer &renderer_;
 };

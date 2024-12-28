@@ -1,7 +1,8 @@
 #include "json_reader.h"
 #include "request_handler.h"
 #include "transport_catalogue.h"
-
+#include "map_renderer.h"
+#include "svg.h"
 // #include <fstream>
 int main()
 {
@@ -17,7 +18,9 @@ int main()
   {
     TransportCatalogue catalogue;
     RequestHandler request_handler(catalogue);
-    JsonReader reader(request_handler);
+    MapRenderer renderer;
+    JsonReader reader(request_handler, renderer);
+
     reader.ReadStreamAndWriteStream(std::cin, std::cout);
   }
 }

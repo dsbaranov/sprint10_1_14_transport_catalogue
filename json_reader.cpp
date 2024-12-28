@@ -5,7 +5,7 @@
  * JSON, а также код обработки запросов к базе и формирование массива ответов в
  * формате JSON
  */
-JsonReader::JsonReader(RequestHandler &handler) : handler_(handler) {}
+JsonReader::JsonReader(RequestHandler &handler, MapRenderer &renderer) : handler_(handler), renderer_(renderer) {}
 
 void JsonReader::ReadStreamAndWriteStream(std::istream &input, std::ostream &out)
 {
